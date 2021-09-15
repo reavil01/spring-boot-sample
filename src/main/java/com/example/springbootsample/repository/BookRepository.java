@@ -1,6 +1,6 @@
 package com.example.springbootsample.repository;
 
-import com.example.springbootsample.domain.Book;
+import com.example.springbootsample.entity.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

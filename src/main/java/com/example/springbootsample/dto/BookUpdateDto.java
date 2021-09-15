@@ -1,18 +1,14 @@
 package com.example.springbootsample.dto;
 
-import com.example.springbootsample.entity.Book;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.time.LocalDate;
 
 @AllArgsConstructor
 @Getter
-public class BookSaveDto {
+public class BookUpdateDto {
     private String name;
     private int price;
     private LocalDate releaseDate;
-
-    public Book toEntity() {
-        return new Book(name, price, releaseDate);
-    }
 }
