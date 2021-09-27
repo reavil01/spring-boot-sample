@@ -1,11 +1,9 @@
 package com.example.springbootsample.dto;
 
 import com.example.springbootsample.entity.Book;
-import lombok.Getter;
 
 import java.time.LocalDate;
 
-@Getter
 public class BookResponseDto {
     private final long id;
     private String name;
@@ -17,5 +15,21 @@ public class BookResponseDto {
         this.name = book.getName();
         this.price = book.getPrice();
         this.releaseDate = book.getReleaseDate();
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public LocalDate getReleaseDate() {
+        return releaseDate;
     }
 }

@@ -2,36 +2,55 @@ package com.example.springbootsample.entity;
 
 
 import com.example.springbootsample.dto.BookUpdateDto;
-import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter
 public class Book {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private final Long id = 0L;
+    private String name;
+    private int price;
+    private LocalDate releaseDate;
+
+    protected Book() {
+    }
+
     public Book(String name, int price, LocalDate releaseDate) {
         this.name = name;
         this.price = price;
         this.releaseDate = releaseDate;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private final Long id = 0L;
+    public Long getId() {
+        return id;
+    }
 
-    @Column
-    @Setter
-    private String name;
+    public String getName() {
+        return name;
+    }
 
-    @Column
-    @Setter
-    private int price;
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    @Column
-    @Setter
-    private LocalDate releaseDate;
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public LocalDate getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(LocalDate releaseDate) {
+        this.releaseDate = releaseDate;
+    }
 
     public void update(BookUpdateDto request) {
         this.name = request.getName();

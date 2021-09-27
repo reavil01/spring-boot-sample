@@ -5,13 +5,16 @@ import com.example.springbootsample.dto.BookResponseDto;
 import com.example.springbootsample.dto.BookSaveDto;
 import com.example.springbootsample.dto.BookUpdateDto;
 import com.example.springbootsample.repository.BookRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+
 @Service
-@RequiredArgsConstructor
 public class BookJpaService {
     private final BookRepository repository;
+
+    BookJpaService(final BookRepository bookRepository) {
+        this.repository = bookRepository;
+    }
 
     public BookResponseDto findById(long id) {
         Book book = repository.findById(id).orElseThrow();
