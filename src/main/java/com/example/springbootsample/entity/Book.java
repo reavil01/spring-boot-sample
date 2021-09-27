@@ -1,7 +1,7 @@
 package com.example.springbootsample.entity;
 
 
-import com.example.springbootsample.dto.BookUpdateDto;
+import com.example.springbootsample.dto.BookUpdateRequest;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -10,7 +10,7 @@ import java.time.LocalDate;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private final Long id = 0L;
+    private Long id = 0L;
     private String name;
     private int price;
     private LocalDate releaseDate;
@@ -18,10 +18,15 @@ public class Book {
     protected Book() {
     }
 
-    public Book(String name, int price, LocalDate releaseDate) {
+    public Book(long id, String name, int price, LocalDate releaseDate) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.releaseDate = releaseDate;
+    }
+
+    public Book(String name, int price, LocalDate releaseDate) {
+        this(0L, name, price, releaseDate);
     }
 
     public Long getId() {
@@ -32,27 +37,15 @@ public class Book {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getPrice() {
         return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
     }
 
     public LocalDate getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(LocalDate releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
-    public void update(BookUpdateDto request) {
+    public void update(BookUpdateRequest request) {
         this.name = request.getName();
         this.price = request.getPrice();
         this.releaseDate = request.getReleaseDate();

@@ -12,8 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 public class BookRepositoryTest {
-    @Autowired
-    private BookRepository repository;
+    @Autowired private BookRepository repository;
 
     String name = "test";
     int price = 1000;
@@ -37,7 +36,7 @@ public class BookRepositoryTest {
     }
 
     @Test
-    void removeTest() {
+    void deleteTest() {
         // given
         Book saved = saveBook();
 
@@ -55,11 +54,10 @@ public class BookRepositoryTest {
         String newName = "changed";
         int newPrice = 11111;
         LocalDate newReleaseDate = LocalDate.now().minusDays(3);
+        Book updateEntity = new Book(saved.getId(), newName, newPrice, newReleaseDate);
 
         // when
-        saved.setName(newName);
-        saved.setPrice(newPrice);
-        saved.setReleaseDate(newReleaseDate);
+        repository.save(updateEntity);
 
         // then
         Book updated = repository.findById(saved.getId()).orElseThrow();

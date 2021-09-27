@@ -2,7 +2,7 @@ package com.example.springbootsample.dto;
 
 import java.time.LocalDate;
 
-public class BookUpdateDto {
+public class BookUpdateRequest {
     private String name;
     private int price;
     private LocalDate releaseDate;
@@ -19,7 +19,7 @@ public class BookUpdateDto {
         return releaseDate;
     }
 
-    public BookUpdateDto(final String name, final int price, final LocalDate releaseDate) {
+    public BookUpdateRequest(final String name, final int price, final LocalDate releaseDate) {
         this.name = name;
         this.price = price;
         this.releaseDate = releaseDate;

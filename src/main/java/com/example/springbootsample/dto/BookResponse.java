@@ -4,15 +4,21 @@ import com.example.springbootsample.entity.Book;
 
 import java.time.LocalDate;
 
-public class BookSaveDto {
+public class BookResponse {
+    private final long id;
     private String name;
     private int price;
     private LocalDate releaseDate;
 
-    public BookSaveDto(final String name, final int price, final LocalDate releaseDate) {
-        this.name = name;
-        this.price = price;
-        this.releaseDate = releaseDate;
+    public BookResponse(Book book) {
+        this.id = book.getId();
+        this.name = book.getName();
+        this.price = book.getPrice();
+        this.releaseDate = book.getReleaseDate();
+    }
+
+    public long getId() {
+        return id;
     }
 
     public String getName() {
@@ -25,9 +31,5 @@ public class BookSaveDto {
 
     public LocalDate getReleaseDate() {
         return releaseDate;
-    }
-
-    public Book toEntity() {
-        return new Book(name, price, releaseDate);
     }
 }

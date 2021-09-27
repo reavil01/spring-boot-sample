@@ -1,9 +1,9 @@
 package com.example.springbootsample.service;
 
-import com.example.springbootsample.dto.BookResponseDto;
+import com.example.springbootsample.dto.BookResponse;
 import com.example.springbootsample.entity.Book;
-import com.example.springbootsample.dto.BookSaveDto;
-import com.example.springbootsample.dto.BookUpdateDto;
+import com.example.springbootsample.dto.BookCreateRequest;
+import com.example.springbootsample.dto.BookUpdateRequest;
 import com.example.springbootsample.repository.BookRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,10 +16,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 public class BookJpaServiceTest {
-    @Autowired
-    private BookJpaService service;
-    @Autowired
-    private BookRepository repository;
+    @Autowired private BookJpaService service;
+    @Autowired private BookRepository repository;
 
     String name = "request";
     int price = 1000;
@@ -36,17 +34,17 @@ public class BookJpaServiceTest {
         Book saved = saveBook();
 
         // when
-        BookResponseDto reponse = service.findById(saved.getId());
+        BookResponse response = service.findById(saved.getId());
 
         // then
-        compareAllValues(saved, reponse.getId(), reponse.getName(), reponse.getPrice(), reponse.getReleaseDate());
+        compareAllValues(saved, response.getId(), response.getName(), response.getPrice(), response.getReleaseDate());
     }
 
 
     @Test
     void saveRequestTest() {
         // given
-        BookSaveDto request = getBookSaveDtoInstance();
+        BookCreateRequest request = getBookSaveDtoInstance();
 
         // when
         long savedId = service.save(request);
@@ -63,7 +61,7 @@ public class BookJpaServiceTest {
         String newName = "updated";
         int newPrice = 10000;
         LocalDate newReleaseDate = LocalDate.now().minusDays(3);
-        BookUpdateDto request = new BookUpdateDto(newName, newPrice, newReleaseDate);
+        BookUpdateRequest request = new BookUpdateRequest(newName, newPrice, newReleaseDate);
 
         // when
         service.update(saved.getId(), request);
@@ -71,6 +69,19 @@ public class BookJpaServiceTest {
         // then
         Book updated = repository.findById(saved.getId()).orElseThrow();
         compareAllValues(updated, saved.getId(), newName, newPrice, newReleaseDate);
+    }
+
+    @Test
+    void deleteRequestTest() {
+        // given
+        Book saved = saveBook();
+        assertThat(repository.findAll().size()).isEqualTo(1);
+
+        // when
+        service.delete(saved.getId());
+
+        // then
+        assertThat(repository.findAll().size()).isEqualTo(0);
     }
 
     private void compareAllValues(Book book, long id, String name, int price, LocalDate releaseDate) {
@@ -84,7 +95,7 @@ public class BookJpaServiceTest {
         return repository.save(getBookSaveDtoInstance().toEntity());
     }
 
-    private BookSaveDto getBookSaveDtoInstance() {
-        return new BookSaveDto(name, price, releaseDate);
+    private BookCreateRequest getBookSaveDtoInstance() {
+        return new BookCreateRequest(name, price, releaseDate);
     }
 }
