@@ -7,6 +7,14 @@ public class BookUpdateRequest {
     private int price;
     private LocalDate releaseDate;
 
+    private BookUpdateRequest() {}
+
+    public BookUpdateRequest(final String name, final int price, final LocalDate releaseDate) {
+        this.name = name;
+        this.price = price;
+        this.releaseDate = releaseDate;
+    }
+
     public String getName() {
         return name;
     }
@@ -17,11 +25,5 @@ public class BookUpdateRequest {
 
     public LocalDate getReleaseDate() {
         return releaseDate;
-    }
-
-    public BookUpdateRequest(final String name, final int price, final LocalDate releaseDate) {
-        this.name = name;
-        this.price = price;
-        this.releaseDate = releaseDate;
     }
 }

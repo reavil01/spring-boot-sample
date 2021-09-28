@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class BookJpaService {
     private final BookRepository repository;
 
-    BookJpaService(final BookRepository bookRepository) {
+    public BookJpaService(final BookRepository bookRepository) {
         this.repository = bookRepository;
     }
 
@@ -40,4 +40,8 @@ public class BookJpaService {
     public void delete(long id) {
         repository.deleteById(id);
     }
+
+//    private Book toEntity(BookCreateRequest request) {
+//        return new Book(request.getName(), request.getPrice(), request.getReleaseDate());
+//    }
 }
