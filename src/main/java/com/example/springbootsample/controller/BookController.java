@@ -1,6 +1,7 @@
 package com.example.springbootsample.controller;
 
 import com.example.springbootsample.dto.BookCreateRequest;
+import com.example.springbootsample.dto.BookPatchRequest;
 import com.example.springbootsample.dto.BookResponse;
 import com.example.springbootsample.dto.BookUpdateRequest;
 import com.example.springbootsample.service.BookJpaService;
@@ -32,8 +33,17 @@ public class BookController {
     @PutMapping("/{id}")
     long update(
             @PathVariable("id") final long id,
-            @RequestBody final BookUpdateRequest bookUpdateRequest) {
+            @RequestBody final BookUpdateRequest bookUpdateRequest
+    ) {
         return bookService.update(id, bookUpdateRequest);
+    }
+
+    @PatchMapping("/{id}")
+    long patch(
+            @PathVariable("id") final long id,
+            @RequestBody final BookPatchRequest bookPatchRequest
+    ) {
+        return bookService.patch(id, bookPatchRequest);
     }
 
     @DeleteMapping("/{id}")

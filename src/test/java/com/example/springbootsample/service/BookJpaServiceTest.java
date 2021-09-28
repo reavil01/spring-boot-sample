@@ -1,5 +1,6 @@
 package com.example.springbootsample.service;
 
+import com.example.springbootsample.dto.BookPatchRequest;
 import com.example.springbootsample.dto.BookResponse;
 import com.example.springbootsample.entity.Book;
 import com.example.springbootsample.dto.BookCreateRequest;
@@ -69,6 +70,21 @@ public class BookJpaServiceTest {
         // then
         Book updated = repository.findById(saved.getId()).orElseThrow();
         compareAllValues(updated, saved.getId(), newName, newPrice, newReleaseDate);
+    }
+
+    @Test
+    void patchRequestTest() {
+        // given
+        Book saved = saveBook();
+        String newName = "updated";
+        BookPatchRequest request = new BookPatchRequest(newName, null, null);
+
+        // when
+        service.patch(saved.getId(), request);
+
+        // then
+        Book updated = repository.findById(saved.getId()).orElseThrow();
+        compareAllValues(updated, saved.getId(), newName, saved.getPrice(), saved.getReleaseDate());
     }
 
     @Test

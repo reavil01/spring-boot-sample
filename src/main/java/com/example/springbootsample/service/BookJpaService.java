@@ -1,12 +1,14 @@
 package com.example.springbootsample.service;
 
-import com.example.springbootsample.entity.Book;
-import com.example.springbootsample.dto.BookResponse;
 import com.example.springbootsample.dto.BookCreateRequest;
+import com.example.springbootsample.dto.BookPatchRequest;
+import com.example.springbootsample.dto.BookResponse;
 import com.example.springbootsample.dto.BookUpdateRequest;
+import com.example.springbootsample.entity.Book;
 import com.example.springbootsample.repository.BookRepository;
 import org.springframework.stereotype.Service;
 
+import static java.util.Objects.requireNonNullElse;
 
 @Service
 public class BookJpaService {
@@ -35,6 +37,18 @@ public class BookJpaService {
         repository.save(saved);
 
         return id;
+    }
+
+    public long patch(long id, BookPatchRequest request) {
+        Book saved = repository.findById(id).orElseThrow();
+        Book updated = new Book(
+                saved.getId(),
+                requireNonNullElse(request.getName(), saved.getName()),
+                requireNonNullElse(request.getPrice(), saved.getPrice()),
+                requireNonNullElse(request.getReleaseDate(), saved.getReleaseDate())
+        );
+
+        return repository.save(updated).getId();
     }
 
     public void delete(long id) {
