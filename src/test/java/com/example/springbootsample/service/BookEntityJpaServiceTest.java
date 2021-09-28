@@ -2,10 +2,10 @@ package com.example.springbootsample.service;
 
 import com.example.springbootsample.dto.BookPatchRequest;
 import com.example.springbootsample.dto.BookResponse;
-import com.example.springbootsample.entity.Book;
+import com.example.springbootsample.spring.entity.BookEntity;
 import com.example.springbootsample.dto.BookCreateRequest;
 import com.example.springbootsample.dto.BookUpdateRequest;
-import com.example.springbootsample.repository.BookRepository;
+import com.example.springbootsample.spring.repository.BookRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +16,9 @@ import java.time.LocalDate;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-public class BookJpaServiceTest {
+public class BookEntityJpaServiceTest {
     @Autowired
-    private BookJpaService service;
+    private BookDataService service;
     @Autowired
     private BookRepository repository;
 
@@ -34,10 +34,10 @@ public class BookJpaServiceTest {
     @Test
     void findRequestTest() {
         // given
-        Book saved = saveBook();
+        BookEntity saved = saveBook();
 
         // when
-        BookResponse response = service.findById(saved.getId());
+        BookResponse response = service.findById(saved.getId()).orElseThrow();
 
         // then
         compareAllValues(saved, response.getId(), response.getName(), response.getPrice(), response.getReleaseDate());
@@ -51,7 +51,7 @@ public class BookJpaServiceTest {
 
         // when
         long savedId = service.save(request);
-        Book saved = repository.findById(savedId).orElseThrow();
+        BookEntity saved = repository.findById(savedId).orElseThrow();
 
         // then
         compareAllValues(saved, savedId, name, price, releaseDate);
@@ -60,7 +60,7 @@ public class BookJpaServiceTest {
     @Test
     void updateRequestTest() {
         // given
-        Book saved = saveBook();
+        BookEntity saved = saveBook();
         String newName = "updated";
         int newPrice = 10000;
         LocalDate newReleaseDate = LocalDate.now().minusDays(3);
@@ -70,14 +70,14 @@ public class BookJpaServiceTest {
         service.update(saved.getId(), request);
 
         // then
-        Book updated = repository.findById(saved.getId()).orElseThrow();
+        BookEntity updated = repository.findById(saved.getId()).orElseThrow();
         compareAllValues(updated, saved.getId(), newName, newPrice, newReleaseDate);
     }
 
     @Test
     void patchRequestTest() {
         // given
-        Book saved = saveBook();
+        BookEntity saved = saveBook();
         String newName = "updated";
         BookPatchRequest request = new BookPatchRequest(newName, null, null);
 
@@ -85,14 +85,14 @@ public class BookJpaServiceTest {
         service.patch(saved.getId(), request);
 
         // then
-        Book updated = repository.findById(saved.getId()).orElseThrow();
+        BookEntity updated = repository.findById(saved.getId()).orElseThrow();
         compareAllValues(updated, saved.getId(), newName, saved.getPrice(), saved.getReleaseDate());
     }
 
     @Test
     void deleteRequestTest() {
         // given
-        Book saved = saveBook();
+        BookEntity saved = saveBook();
         assertThat(repository.findAll().size()).isEqualTo(1);
 
         // when
@@ -102,14 +102,14 @@ public class BookJpaServiceTest {
         assertThat(repository.findAll().size()).isEqualTo(0);
     }
 
-    private void compareAllValues(Book book, long id, String name, int price, LocalDate releaseDate) {
-        assertThat(book.getId()).isEqualTo(id);
-        assertThat(book.getName()).isEqualTo(name);
-        assertThat(book.getPrice()).isEqualTo(price);
-        assertThat(book.getReleaseDate()).isEqualTo(releaseDate);
+    private void compareAllValues(BookEntity bookEntity, long id, String name, int price, LocalDate releaseDate) {
+        assertThat(bookEntity.getId()).isEqualTo(id);
+        assertThat(bookEntity.getName()).isEqualTo(name);
+        assertThat(bookEntity.getPrice()).isEqualTo(price);
+        assertThat(bookEntity.getReleaseDate()).isEqualTo(releaseDate);
     }
 
-    private Book saveBook() {
+    private BookEntity saveBook() {
         long id = service.save(getBookSaveDtoInstance());
         return repository.findById(id).orElseThrow();
     }

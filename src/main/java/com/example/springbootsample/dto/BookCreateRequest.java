@@ -1,6 +1,5 @@
 package com.example.springbootsample.dto;
 
-import com.example.springbootsample.entity.Book;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDate;

@@ -1,41 +1,24 @@
 package com.example.springbootsample.entity;
 
-
-import com.example.springbootsample.dto.BookUpdateRequest;
-
-import javax.persistence.*;
 import java.time.LocalDate;
 
-@Entity
+import static java.util.Objects.requireNonNull;
+
 public class Book {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private String name;
-    private int price;
-    private LocalDate releaseDate;
-
-    protected Book() {
-    }
+    private final Long id;
+    private final String name;
+    private final Integer price;
+    private final LocalDate releaseDate;
 
     public Book(
-            final long id,
+            final Long id,
             final String name,
-            final int price,
-            final LocalDate releaseDate
-    ) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.releaseDate = releaseDate;
-    }
-
-    public Book(
-            final String name,
-            final int price,
-            final LocalDate releaseDate
-    ) {
-        this(0L, name, price, releaseDate);
+            final Integer price,
+            final LocalDate releaseDate) {
+        this.id = requireNonNull(id);
+        this.name = requireNonNull(name);
+        this.price = requireNonNull(price);
+        this.releaseDate = requireNonNull(releaseDate);
     }
 
     public Long getId() {
@@ -46,7 +29,7 @@ public class Book {
         return name;
     }
 
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
     }
 

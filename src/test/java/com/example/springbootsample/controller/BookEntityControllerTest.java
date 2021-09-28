@@ -2,8 +2,9 @@ package com.example.springbootsample.controller;
 
 import com.example.springbootsample.dto.BookCreateRequest;
 import com.example.springbootsample.dto.BookResponse;
-import com.example.springbootsample.entity.Book;
-import com.example.springbootsample.service.BookJpaService;
+import com.example.springbootsample.service.BookDataService;
+import com.example.springbootsample.spring.controller.BookController;
+import com.example.springbootsample.spring.entity.BookEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -24,9 +26,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest
-public class BookControllerTest {
+public class BookEntityControllerTest {
     @MockBean
-    private BookJpaService service;
+    private BookDataService service;
 
     @Autowired
     @InjectMocks
@@ -48,10 +50,10 @@ public class BookControllerTest {
         String name = "book";
         int price = 1000;
         LocalDate releaseDate = LocalDate.now();
-        Book book = new Book(name, price, releaseDate);
+        BookEntity bookEntity = new BookEntity(name, price, releaseDate);
 
         // when
-        when(service.findById(1L)).thenReturn(new BookResponse(book));
+        when(service.findById(1L)).thenReturn(Optional.of(new BookResponse(bookEntity)));
 
         // then
         mockMvc.perform(MockMvcRequestBuilders.get("/books/1"))

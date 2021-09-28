@@ -1,6 +1,6 @@
-package com.example.springbootsample.repository;
+package com.example.springbootsample.spring.repository;
 
-import com.example.springbootsample.entity.Book;
+import com.example.springbootsample.spring.entity.BookEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-public class BookRepositoryTest {
+public class BookEntityRepositoryTest {
     @Autowired private BookRepository repository;
 
     String name = "test";
@@ -26,10 +26,10 @@ public class BookRepositoryTest {
     @Test
     void saveTest() {
         // given
-        Book book = getBookInstance();
+        BookEntity bookEntity = getBookInstance();
 
         // when
-        Book saved = repository.save(book);
+        BookEntity saved = repository.save(bookEntity);
 
         // then
         compareAllValues(saved, saved.getId(), name, price, releaseDate);
@@ -38,7 +38,7 @@ public class BookRepositoryTest {
     @Test
     void deleteTest() {
         // given
-        Book saved = saveBook();
+        BookEntity saved = saveBook();
 
         // when
         repository.delete(saved);
@@ -50,32 +50,32 @@ public class BookRepositoryTest {
     @Test
     void updateTest() {
         // given
-        Book saved = saveBook();
+        BookEntity saved = saveBook();
         String newName = "changed";
         int newPrice = 11111;
         LocalDate newReleaseDate = LocalDate.now().minusDays(3);
-        Book updateEntity = new Book(saved.getId(), newName, newPrice, newReleaseDate);
+        BookEntity updateEntity = new BookEntity(saved.getId(), newName, newPrice, newReleaseDate);
 
         // when
         repository.save(updateEntity);
 
         // then
-        Book updated = repository.findById(saved.getId()).orElseThrow();
+        BookEntity updated = repository.findById(saved.getId()).orElseThrow();
         compareAllValues(updated, saved.getId(), newName, newPrice, newReleaseDate);
     }
 
-    private void compareAllValues(Book book, long id, String name, int price, LocalDate releaseDate) {
-        assertThat(book.getId()).isEqualTo(id);
-        assertThat(book.getName()).isEqualTo(name);
-        assertThat(book.getPrice()).isEqualTo(price);
-        assertThat(book.getReleaseDate()).isEqualTo(releaseDate);
+    private void compareAllValues(BookEntity bookEntity, long id, String name, int price, LocalDate releaseDate) {
+        assertThat(bookEntity.getId()).isEqualTo(id);
+        assertThat(bookEntity.getName()).isEqualTo(name);
+        assertThat(bookEntity.getPrice()).isEqualTo(price);
+        assertThat(bookEntity.getReleaseDate()).isEqualTo(releaseDate);
     }
 
-    private Book saveBook() {
+    private BookEntity saveBook() {
         return repository.save(getBookInstance());
     }
 
-    private Book getBookInstance() {
-        return new Book(name, price, releaseDate);
+    private BookEntity getBookInstance() {
+        return new BookEntity(name, price, releaseDate);
     }
 }

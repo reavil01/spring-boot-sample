@@ -1,6 +1,6 @@
 package com.example.springbootsample.dto;
 
-import com.example.springbootsample.entity.Book;
+import com.example.springbootsample.spring.entity.BookEntity;
 
 import java.time.LocalDate;
 
@@ -10,11 +10,11 @@ public class BookResponse {
     private final int price;
     private final LocalDate releaseDate;
 
-    public BookResponse(final Book book) {
-        this.id = book.getId();
-        this.name = book.getName();
-        this.price = book.getPrice();
-        this.releaseDate = book.getReleaseDate();
+    public BookResponse(final BookEntity bookEntity) {
+        this.id = bookEntity.getId();
+        this.name = bookEntity.getName();
+        this.price = bookEntity.getPrice();
+        this.releaseDate = bookEntity.getReleaseDate();
     }
 
     public long getId() {
