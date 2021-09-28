@@ -6,9 +6,9 @@ import java.time.LocalDate;
 
 public class BookResponse {
     private final long id;
-    private String name;
-    private int price;
-    private LocalDate releaseDate;
+    private final String name;
+    private final int price;
+    private final LocalDate releaseDate;
 
     public BookResponse(Book book) {
         this.id = book.getId();

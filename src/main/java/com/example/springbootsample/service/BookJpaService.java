@@ -6,6 +6,7 @@ import com.example.springbootsample.dto.BookResponse;
 import com.example.springbootsample.dto.BookUpdateRequest;
 import com.example.springbootsample.entity.Book;
 import com.example.springbootsample.repository.BookRepository;
+import kotlin._Assertions;
 import org.springframework.stereotype.Service;
 
 import static java.util.Objects.requireNonNullElse;
@@ -33,8 +34,13 @@ public class BookJpaService {
 
     public long update(long id, BookUpdateRequest request) {
         Book saved = repository.findById(id).orElseThrow();
-        saved.update(request);
-        repository.save(saved);
+        Book updated = new Book(
+                saved.getId(),
+                request.getName(),
+                request.getPrice(),
+                request.getReleaseDate()
+        );
+        repository.save(updated);
 
         return id;
     }

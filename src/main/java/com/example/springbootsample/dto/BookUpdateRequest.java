@@ -1,15 +1,19 @@
 package com.example.springbootsample.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.LocalDate;
 
 public class BookUpdateRequest {
-    private String name;
-    private int price;
-    private LocalDate releaseDate;
+    private final String name;
+    private final int price;
+    private final LocalDate releaseDate;
 
-    private BookUpdateRequest() {}
-
-    public BookUpdateRequest(final String name, final int price, final LocalDate releaseDate) {
+    public BookUpdateRequest(
+            @JsonProperty("name") final String name,
+            @JsonProperty("price") final int price,
+            @JsonProperty("releaseDate") final LocalDate releaseDate
+    ) {
         this.name = name;
         this.price = price;
         this.releaseDate = releaseDate;

@@ -10,13 +10,12 @@ import java.time.LocalDate;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id = 0L;
+    private Long id;
     private String name;
     private int price;
     private LocalDate releaseDate;
 
-    protected Book() {
-    }
+    protected Book() {}
 
     public Book(long id, String name, int price, LocalDate releaseDate) {
         this.id = id;
@@ -43,11 +42,5 @@ public class Book {
 
     public LocalDate getReleaseDate() {
         return releaseDate;
-    }
-
-    public void update(BookUpdateRequest request) {
-        this.name = request.getName();
-        this.price = request.getPrice();
-        this.releaseDate = request.getReleaseDate();
     }
 }
