@@ -6,7 +6,6 @@ import com.example.springbootsample.dto.BookResponse;
 import com.example.springbootsample.dto.BookUpdateRequest;
 import com.example.springbootsample.entity.Book;
 import com.example.springbootsample.repository.BookRepository;
-import kotlin._Assertions;
 import org.springframework.stereotype.Service;
 
 import static java.util.Objects.requireNonNullElse;

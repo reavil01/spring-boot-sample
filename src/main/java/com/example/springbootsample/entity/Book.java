@@ -15,16 +15,26 @@ public class Book {
     private int price;
     private LocalDate releaseDate;
 
-    protected Book() {}
+    protected Book() {
+    }
 
-    public Book(long id, String name, int price, LocalDate releaseDate) {
+    public Book(
+            final long id,
+            final String name,
+            final int price,
+            final LocalDate releaseDate
+    ) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.releaseDate = releaseDate;
     }
 
-    public Book(String name, int price, LocalDate releaseDate) {
+    public Book(
+            final String name,
+            final int price,
+            final LocalDate releaseDate
+    ) {
         this(0L, name, price, releaseDate);
     }
 

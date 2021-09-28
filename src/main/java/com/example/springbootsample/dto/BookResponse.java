@@ -10,7 +10,7 @@ public class BookResponse {
     private final int price;
     private final LocalDate releaseDate;
 
-    public BookResponse(Book book) {
+    public BookResponse(final Book book) {
         this.id = book.getId();
         this.name = book.getName();
         this.price = book.getPrice();
