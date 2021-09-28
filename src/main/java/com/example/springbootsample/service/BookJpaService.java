@@ -26,9 +26,14 @@ public class BookJpaService {
     }
 
     public long save(BookCreateRequest request) {
-        Book book = repository.save(request.toEntity());
+        Book book = new Book(
+                request.getName(),
+                request.getPrice(),
+                request.getReleaseDate()
+        );
+        Book saved = repository.save(book);
 
-        return book.getId();
+        return saved.getId();
     }
 
     public long update(long id, BookUpdateRequest request) {

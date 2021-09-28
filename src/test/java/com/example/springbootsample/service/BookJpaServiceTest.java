@@ -17,8 +17,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 public class BookJpaServiceTest {
-    @Autowired private BookJpaService service;
-    @Autowired private BookRepository repository;
+    @Autowired
+    private BookJpaService service;
+    @Autowired
+    private BookRepository repository;
 
     String name = "request";
     int price = 1000;
@@ -108,7 +110,8 @@ public class BookJpaServiceTest {
     }
 
     private Book saveBook() {
-        return repository.save(getBookSaveDtoInstance().toEntity());
+        long id = service.save(getBookSaveDtoInstance());
+        return repository.findById(id).orElseThrow();
     }
 
     private BookCreateRequest getBookSaveDtoInstance() {

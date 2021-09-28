@@ -31,8 +31,4 @@ public class BookCreateRequest {
     public LocalDate getReleaseDate() {
         return releaseDate;
     }
-
-    public Book toEntity() {
-        return new Book(name, price, releaseDate);
-    }
 }
