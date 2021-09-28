@@ -9,6 +9,14 @@ public class BookCreateRequest {
     private int price;
     private LocalDate releaseDate;
 
+    private BookCreateRequest() {}
+
+    public BookCreateRequest(final String name, final String price, final String releaseDate) {
+        this.name = name;
+        this.price = Integer.parseInt(price);
+        this.releaseDate = LocalDate.parse(releaseDate);
+    }
+
     public BookCreateRequest(final String name, final int price, final LocalDate releaseDate) {
         this.name = name;
         this.price = price;
